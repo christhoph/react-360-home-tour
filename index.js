@@ -1,22 +1,10 @@
 import React, { Component } from "react";
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  VrButton,
-  Environment,
-  asset
-} from "react-360";
+import { AppRegistry, StyleSheet, Text, View, VrButton } from "react-360";
 
-import house from "./data/houseData";
+import { connect, changeRoom } from "./data/store";
 
-export default class HouseTourVR extends Component {
-  state = {
-    room: house.House.roomName,
-    info: house.House.info,
-    adjacentRooms: house.House.adjacentRooms
-  };
+export default class Buttons extends Component {
+  handleClickButton = roomSelected => () => changeRoom(roomSelected);
 
   createRoomBtn = rooms =>
     rooms.map(room => (
@@ -25,20 +13,8 @@ export default class HouseTourVR extends Component {
       </VrButton>
     ));
 
-  handleClickButton = roomSelected => () => {
-    this.setState({
-      room: house[`${roomSelected}`].roomName,
-      info: house[`${roomSelected}`].info,
-      adjacentRooms: house[`${roomSelected}`].adjacentRooms
-    });
-
-    Environment.setBackgroundImage(
-      asset(`./360_${house[`${roomSelected}`].img}`)
-    );
-  };
-
   render() {
-    const { room, info, adjacentRooms } = this.state;
+    const { room, adjacentRooms } = this.props;
 
     return (
       <View style={styles.panel}>
@@ -47,7 +23,17 @@ export default class HouseTourVR extends Component {
           <Text>{room}</Text>
           {this.createRoomBtn(adjacentRooms)}
         </View>
+      </View>
+    );
+  }
+}
 
+export class HouseInfoPanel extends Component {
+  render() {
+    const { info } = this.props;
+
+    return (
+      <View style={styles.panel}>
         <View style={styles.greetingBox}>
           <Text style={styles.greeting}>Room Info</Text>
           <Text>{info}</Text>
@@ -76,4 +62,11 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent("HouseTourVR", () => HouseTourVR);
+const ConnectedButtons = connect(Buttons);
+const ConnectedHouseInfoPanel = connect(HouseInfoPanel);
+
+AppRegistry.registerComponent("ConnectedButtons", () => ConnectedButtons);
+AppRegistry.registerComponent(
+  "ConnectedHouseInfoPanel",
+  () => ConnectedHouseInfoPanel
+);
