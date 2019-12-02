@@ -3,21 +3,21 @@ import { Environment, asset } from "react-360";
 
 import house from "./houseData";
 
+const listeners = new Set();
+
 const State = {
   room: house.House.roomName,
   info: house.House.info,
   adjacentRooms: house.House.adjacentRooms
 };
 
-const listeners = new Set();
-
-export function updateComponents() {
+export const updateComponents = () => {
   for (const cb of listeners.values()) {
     cb();
   }
-}
+};
 
-export function changeRoom(roomSelected) {
+export const changeRoom = roomSelected => {
   const roomName = roomSelected;
 
   State.room = roomName;
@@ -27,9 +27,9 @@ export function changeRoom(roomSelected) {
   Environment.setBackgroundImage(asset(`./360_${house[`${roomName}`].img}`));
 
   updateComponents();
-}
+};
 
-export function connect(ChildComponent) {
+export const connect = ChildComponent => {
   return class Wrapper extends Component {
     state = {
       room: State.room,
@@ -61,4 +61,4 @@ export function connect(ChildComponent) {
       );
     }
   };
-}
+};

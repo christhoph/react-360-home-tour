@@ -12,12 +12,15 @@ function init(bundle, parent, options = {}) {
     ...options
   });
 
-  const buttonsPanel = new Surface(400, 550, Surface.SurfaceShape.Flat);
+  const buttonsPanel = new Surface(400, 400, Surface.SurfaceShape.Flat);
   buttonsPanel.setAngle(-0.6, 0.1);
 
-  r360.renderToSurface(r360.createRoot("ConnectedButtons", {}), buttonsPanel);
+  r360.renderToSurface(
+    r360.createRoot("ConnectedButtonsInfoPanel", {}),
+    buttonsPanel
+  );
 
-  const infoPanel = new Surface(400, 550, Surface.SurfaceShape.Flat);
+  const infoPanel = new Surface(400, 400, Surface.SurfaceShape.Flat);
   infoPanel.setAngle(0.6, 0.1);
 
   r360.renderToSurface(
