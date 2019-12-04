@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-360";
 
 import Button from "../../components/Button";
+import AudioPanel from "../../components/AudioPanel";
 
 const ButtonsInfoPanel = ({ adjacentRooms }) => {
   const { buttonPanel, buttonHeader } = styles;
@@ -14,6 +15,7 @@ const ButtonsInfoPanel = ({ adjacentRooms }) => {
       <View style={buttonPanel}>
         <Text style={buttonHeader}>Room Selection</Text>
         {createRoomBtn(adjacentRooms)}
+        <AudioPanel />
       </View>
     </View>
   );
